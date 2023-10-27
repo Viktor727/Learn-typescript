@@ -10,11 +10,11 @@ class Direction {
   levels: string[] = [];
   private _name: string;
 
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  constructor(name:string) {
+  constructor(name: string) {
     this._name = name;
   }
 
@@ -34,11 +34,11 @@ class Level {
     this._program = program;
   }
 
-  get name() {
+  get name(): string {
     return this._name;
   }
 
-  get program() {
+  get program(): string {
     return this._program;
   }
 
@@ -86,7 +86,7 @@ class Student {
   private birthYear: number;
 
   grades: Graduate = {};
-  attendance:boolean[] = [];
+  attendance: boolean[] = [];
 
   constructor(firstName: string, lastName: string, birthYear: number) {
     this.firstName = firstName;
@@ -94,7 +94,7 @@ class Student {
     this.birthYear = birthYear;
   }
 
-  get fullName() {
+  get fullName(): string {
     return `${this.lastName} ${this.firstName}`;
   }
 
@@ -102,7 +102,7 @@ class Student {
     [this.lastName, this.firstName] = value.split(" ");
   }
 
-  get age() {
+  get age(): number {
     return new Date().getFullYear() - this.birthYear;
   }
 
