@@ -40,23 +40,23 @@ class School {
     this._lecturers = lectures;
   }
 
-  addArea(value: Area) {
+  addArea(value: Area): void {
     this._areas.push(value);
   }
 
-  removeArea(value: number) {
+  removeArea(value: number): void {
     this._areas.splice(value, 1);
   }
 
-  addLecturer(value: Lectures) {
+  addLecturer(value: Lectures): void {
     this._lecturers.push(value);
   }
 
-  removeLecturer(value: number) {
+  removeLecturer(value: number): void {
     this._lecturers.splice(value, 1);
   }
 
-  get areas() {
+  get areas(): Area[] {
     return this._areas;
   }
 
@@ -69,17 +69,17 @@ class Area {
   // DONE implement getters for fields and 'remove level' methods DONE
   // DONE implement getters for fields and 'add level' methods DONE
   private _levels: Level[] = [];
-  private _name;
+  private _name: string;
 
   constructor(name: string) {
     this._name = name;
   }
 
-  addLevel(value: Level) {
+  addLevel(value: Level): void {
     this._levels.push(value);
   }
 
-  removeLevel(value: number) {
+  removeLevel(value: number): void {
     this._levels.splice(value, 1);
   }
 }
@@ -97,11 +97,11 @@ class Level {
     this._description = description;
   }
 
-  addGroup(value: Group) {
+  addGroup(value: Group): void {
     this._groups.push(value);
   }
 
-  removeGroup(value: number) {
+  removeGroup(value: number): void {
     this._groups.splice(value, 1);
   }
 
@@ -110,8 +110,7 @@ class Level {
   }
 }
 
-// ЦЕ НОРМАЛЬНО ЩО Я ПРЯМ КЛАС ЗАФІГАЧИВ В МАСИВ _student, бо я спочатку хтів interface. 
-// Але мені чомусь клас якось цікавіше, я просто не знаю чи це норм практика
+// зрозумів дякую за пояснення
 // DONE
 class Group {
   // DONE implement getters for fields 'remove student' methods DONE
@@ -137,15 +136,15 @@ class Group {
     this._area = area;
   }
 
-  setStatus(value: Status) {
+  setStatus(value: Status): void {
     this._status = value;
   }
 
-  addStudent(value: Student) {
+  addStudent(value: Student): void {
     this._students.push(value);
   }
 
-  removeStudent(value: number) {
+  removeStudent(value: number): void {
     // START FROM ZERO
     this._students.splice(value, 1);
   }
@@ -194,10 +193,7 @@ class Student {
     return new Date().getFullYear() - this._birthYear;
   }
 
-  // Трохи не розумію навіщо нам цей SET fullName якщо в нас вже є get fullName. Виходить він просто useless?
-  // Нам всеодно клас не дасть створити студента без імені і прізвища
-  // Значно краще дати змогу окремо поміняти прізвище і ім'я
-  // На випадок якщо хтось одружиться або просто захоче поміняти ім'я в паспорті
+  // зро-умів логіку
   // set fullName(value: string) {
   //   [this._lastName, this._firstName] = value.split(" ");
   // }
@@ -216,9 +212,9 @@ class Student {
     if (!gradeValues.length) return 0;
 
     const averageGrade =
-      gradeValues.reduce((sum, grade) => sum + grade, 0) / gradeValues.length;
+      gradeValues.reduce((sum: number, grade: number) => sum + grade, 0) / gradeValues.length;
     const attendancePercentage =
-      (this._visits.filter((present) => present).length / this._visits.length) *
+      (this._visits.filter((present: boolean) => present).length / this._visits.length) *
       100;
 
     return (averageGrade + attendancePercentage) / 2;
@@ -226,9 +222,7 @@ class Student {
 }  
 
 // START
-// ЦЕ НОРМАЛЬНО ЩО Я СЮДИ (group1.addStudent(student1)) ПРЯМ КЛАС ПЕРЕДАЮ? 
-// ЯК НА МЕНЕ ЦЕ САМИЙ ЛОГІЧНИЙ СПОСІБ ЩОБ КЕРУВАТИ ВСІМА КЛАСАМИ ОДНОЧАСНО
-// Я ПРОСТО СПОЧАТКУ НЕ РОЗУМІВ ЛОГІКУ, А ТАК НАЧЕ ВИХОДИТЬ СВЯЗКА НОРМАЛЬНА
+// зрозумів, дуже дякую за пояснення
 const student1 = new Student("Viktor", "Shmatko", 2000);
 const student2 = new Student("Veronika", "Sereda", 1999);
 console.log(student1.fullName);
