@@ -77,7 +77,7 @@ class Group {
 }
 
 interface Graduate {
-  [subject: string]: number;
+    [subject: string]: number;
 }
 
 class Student {
