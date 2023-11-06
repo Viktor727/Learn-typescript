@@ -1,6 +1,6 @@
 enum Statuses {
-  "success",
-  "failed",
+  success = "success",
+  failed = "failed",
 }
 
 interface PaymentRequest {
@@ -9,18 +9,15 @@ interface PaymentRequest {
   to: number;
 }
 
-interface SuccessResponse {
-  status: Statuses;
-  data: {
+type SuccessResponse = {
+  status: Statuses.success;
+  data: PaymentRequest | {
     databaseId: number;
-    sum: number;
-    from: number;
-    to: number;
   };
-}
+};
 
 interface FailedResponse {
-  status: Statuses;
+  status: Statuses.failed;
   data: {
     errorMessage: string;
     errorCode: number;
@@ -28,3 +25,22 @@ interface FailedResponse {
 }
 
 type PaymentResponses = SuccessResponse | FailedResponse;
+
+
+const responseSuccess: PaymentResponses = {
+  status: Statuses.success,
+  data: {
+    databaseId: 1,
+    sum: 4,
+    from: 5,
+    to: 1,
+  }
+};
+
+const responseFailed: PaymentResponses = {
+  status: Statuses.failed,
+  data: {
+    errorMessage: "Hello it is error",
+    errorCode: 900
+  },
+};
