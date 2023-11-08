@@ -3,44 +3,101 @@ enum Statuses {
   failed = "failed",
 }
 
-interface PaymentRequest {
+interface IPaymentRequest {
   sum: number;
   from: number;
   to: number;
 }
 
-type SuccessResponse = {
-  status: Statuses.success;
-  data: PaymentRequest | {
-    databaseId: number;
-  };
-};
-
-interface FailedResponse {
-  status: Statuses.failed;
-  data: {
-    errorMessage: string;
-    errorCode: number;
-  };
+interface ISuccessData extends IPaymentRequest {
+  databaseId: number;
 }
 
-type PaymentResponses = SuccessResponse | FailedResponse;
+interface IFailedData {
+  errorMessage: string;
+  errorCode: number;
+}
 
+interface ISuccessResponse {
+  status: Statuses.success;
+  data: ISuccessData;
+}
 
-const responseSuccess: PaymentResponses = {
+interface IFailedResponse {
+  status: Statuses.failed;
+  data: IFailedData;
+}
+
+type TPaymentResponses = ISuccessResponse | IFailedResponse;
+
+const responseSuccess: TPaymentResponses = {
   status: Statuses.success,
   data: {
-    databaseId: 1,
     sum: 4,
     from: 5,
     to: 1,
-  }
+    databaseId: 1,
+  },
 };
 
-const responseFailed: PaymentResponses = {
+const responseFailed: TPaymentResponses = {
   status: Statuses.failed,
   data: {
     errorMessage: "Hello it is error",
-    errorCode: 900
+    errorCode: 900,
   },
 };
+
+// ТОЙ САМИЙ КОД, ЩО Й ЗВЕРХУ ТІЛЬКИ ВНИЗУ ІМЕНІ НАПИСАНІ ПО-ІНШОМУ: НЕ СТАВИВ T та I спереду 
+// - і прикол в тому, що різниця тільки в назвах interface, type, але зверху код працює, а знизу код не працює - це якась АНОМАЛІЯ
+
+
+// enum Statuses {
+//   success = "success",
+//   failed = "failed",
+// }
+
+// interface PaymentRequest {
+//   sum: number;
+//   from: number;
+//   to: number;
+// }
+
+// interface SuccessData extends PaymentRequest {
+//   databaseId: number;
+// }
+
+// interface FailedData {
+//   errorMessage: string;
+//   errorCode: number;
+// }
+
+// interface SuccessResponse {
+//   status: Statuses.success;
+//   data: SuccessData;
+// }
+
+// interface FailedResponse {
+//   status: Statuses.failed;
+//   data: FailedData;
+// }
+
+// type PaymentResponses = SuccessResponse | FailedResponse;
+
+// const responseSuccess: PaymentResponses = {
+//   status: Statuses.success,
+//   data: {
+//     sum: 4,
+//     from: 5,
+//     to: 1,
+//     databaseId: 1,
+//   },
+// };
+
+// const responseFailed: PaymentResponses = {
+//   status: Statuses.failed,
+//   data: {
+//     errorMessage: "Hello it is error",
+//     errorCode: 900,
+//   },
+// };
