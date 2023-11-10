@@ -1,29 +1,29 @@
 enum colors {
-    blue = "blue",
-    red = "red",
-    green = "green",
-    yellow = "yellow",
-    black = "black",
-    white = "white",
-    gray = "gray",
-    purple = "purple",
-    orange = "orange",
-    pink = "pink"
+  blue = "blue",
+  red = "red",
+  green = "green",
+  yellow = "yellow",
+  black = "black",
+  white = "white",
+  gray = "gray",
+  purple = "purple",
+  orange = "orange",
+  pink = "pink"
 }
 
 
 abstract class Shape {
-    constructor(protected readonly name: string, protected readonly color: colors) {}
+  constructor(protected readonly name: string, protected readonly color: colors) {}
 
-    abstract get calculateArea(): number;
+  abstract get calculateArea(): number;
 
-    shapeName(): string{
-        return this.name;
-    }
+  shapeName(): string{
+      return this.name;
+  }
 
-    shapeColor(): string{
-        return this.color;
-    }
+  shapeColor(): string{
+      return this.color;
+  }
 }
 
 class Rectangle extends Shape {
