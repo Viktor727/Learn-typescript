@@ -18,7 +18,6 @@
 //   return currentValues;
 // }
 
-
 // export function createMap<T>(list: T[]) {
 //   return function<U>(cb: (x: T) => U): U[] {
 //     const result = [];
@@ -31,32 +30,27 @@
 //   };
 // }
 
-
-
-
-
-// 1. ✅ Написати функцію convertToString, яка може приймати аргумент будь якого типу та повертати його 
+// 1. ✅ Написати функцію convertToString, яка може приймати аргумент будь якого типу та повертати його
 // у вигляді строки (за допомогою методу toString). Якщо цього методу немає, тоді повертати undefined
-function convertToString<T>(value: T): string | undefined{
-  if(value && typeof value.toString === "function"){
+function convertToString<T>(value: T): string | undefined {
+  if (value && typeof value.toString === "function") {
     return value.toString();
-  } else{
-    return undefined;  
+  } else {
+    return undefined;
   }
-} 
+}
 
 console.log(convertToString(5));
 console.log(convertToString(true));
 console.log(convertToString(4.25232));
-console.log(convertToString(''));
-console.log(convertToString('HELLO'));
+console.log(convertToString(""));
+console.log(convertToString("HELLO"));
 console.log(convertToString(null));
 console.log(convertToString(undefined));
 
-
-// 2. ✅ Написати функцію sortEntities, яка має сортувати різні об'єкти, які мають id за зростанням 
-// або за зменшенням. Функція приймає 2 аргументи - масив об'єктів та ключове слово desc 
-// або asс, відповідно до нього буде відбуватися сортування. 
+// 2. ✅ Написати функцію sortEntities, яка має сортувати різні об'єкти, які мають id за зростанням
+// або за зменшенням. Функція приймає 2 аргументи - масив об'єктів та ключове слово desc
+// або asс, відповідно до нього буде відбуватися сортування.
 
 enum ESortingBy {
   Asc = "Asc",
@@ -64,22 +58,30 @@ enum ESortingBy {
 }
 
 enum ECourses {
-  English = 'English',
-  Typescript = 'Typescript',
-  JavaScript = 'Javascript',
-  NextJS = 'Nextjs',
+  English = "English",
+  Typescript = "Typescript",
+  JavaScript = "Javascript",
+  NextJS = "Nextjs",
 }
 
-interface IStrudents {
-  id: number, 
-  fullName: string,
-  yearOfBirthday: Date,
-  courseLearning: ECourses,
-  mediumScore: number
+interface IHasId {
+  id: number;
+}
+
+interface IStrudents1 extends IHasId {
+  fullName: string;
+  yearOfBirthday: Date;
+  courseLearning: ECourses;
+  mediumScore: number;
+}
+
+interface IStrudents2 extends IHasId {
+  name: string;
+  age: number;
 }
 
 // Не найкращий метод сортування, але він працює
-function sortEntities(strudents: IStrudents[], sortingBy: ESortingBy): IStrudents[] | undefined {
+function sortEntities<T extends IHasId>(strudents: T[], sortingBy: ESortingBy): T[] | undefined {
   if (sortingBy === ESortingBy.Asc) {
     console.log("Asc");
     return strudents.sort((a, b) =>
@@ -95,7 +97,7 @@ function sortEntities(strudents: IStrudents[], sortingBy: ESortingBy): IStrudent
   return undefined;
 }
 
-const arrayStrudents: IStrudents[] = [
+const arrayStrudents1: IStrudents1[] = [
   {
     id: 5,
     fullName: "Viktor Shmatko",
@@ -119,5 +121,26 @@ const arrayStrudents: IStrudents[] = [
   },
 ];
 
-console.log(sortEntities(arrayStrudents, ESortingBy.Desc));
-console.log(sortEntities(arrayStrudents, ESortingBy.Asc));
+const arrayStrudents2: IStrudents2[] = [
+  {
+    id: 5,
+    name: "Viktor",
+    age: 21,
+  },
+  {
+    id: 1,
+    name: "Vero",
+    age: 24,
+  },
+  {
+    id: 9,
+    name: "Igor",
+    age: 23,
+  },
+];
+
+console.log(sortEntities(arrayStrudents1, ESortingBy.Desc));
+console.log(sortEntities(arrayStrudents1, ESortingBy.Asc));
+
+console.log(sortEntities(arrayStrudents2, ESortingBy.Desc));
+console.log(sortEntities(arrayStrudents2, ESortingBy.Asc));
