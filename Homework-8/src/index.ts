@@ -139,3 +139,7 @@ let user3: UsePick = {
   name: 'string',
   age: 61
 }
+
+// type isItNever<K> = K extends never ? 'yes' : 'no';
+// type isItNever<K> = K[] extends never[] ? "yes" : "no";
+// let yesOrNo: isItNever<never>;
