@@ -9,12 +9,18 @@
 // На виклику методу getUsers у консоль має вивестись повідомлення "Oops, there is an error in getUsers: No users"
 
 
-const Catch = (target: any, context: ClassMethodDecoratorContext) => {
-  try {
-    target();
-  } catch (error: any) {
-    console.log(`Oops, there is an error in ${target.name}: ${error.message}`);
-  }
+const Catch = (target: any, methodName: string, descriptor: PropertyDescriptor) => {    
+    const originalMethod = descriptor.value;
+
+    descriptor.value = function (...args: any[]) {
+      try {
+        const result = originalMethod.apply(this, args);
+      } catch (error: any) {
+        console.log(`Oops, there is an error in ${methodName}: ${error.message}`);
+      }
+    };
+
+    return descriptor
 };
 
 class UsersService {
@@ -25,3 +31,4 @@ class UsersService {
 }
 
 const service1 = new UsersService();
+service1.getUsers();
