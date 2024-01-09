@@ -49,15 +49,6 @@ class TodoList {
     return this._items.findIndex((item) => item.id === idToFind);
   }
 
-  sort(type: ESort) {
-    if (ESort.Status) {
-      this._items = this._items.sort();
-      return this._items.sort();
-    } else if (ESort.Time) {
-      this._items.sort((a, b) => a.date.valueOf() - b.date.valueOf());
-    }
-  }
-
   createItem(TodoItem: TodoItem): void {
     this._items.push(TodoItem);
   }
@@ -136,22 +127,39 @@ class TodoList {
   }
 }
 
-class TodoList1 extends TodoList {
+// Не бачу, де тут розширення функціоналу базового ToDoList шляхом створення нових класів) 
+// По умові у нього не повинно бути  функціоналу сортування та пошуку. 
+// Але мають бути 2 класи, які його розширюють: ToDoListSortable та ToDoListFilterable. 
+// Один вміє сортувати, інший фільтрувати. Бо наразі у тебе ToDoList вміє все.
+
+
+
+class ToDoListSortable extends TodoList {
   constructor(name: string, items: TodoItem[]) {
     super(name, items);
   }
 
-  private findName(name: string): number {
-    return this._items.findIndex((item) => item.name === name);
+  sortByStatus(): TodoItem[] {
+    this._items = this._items.sort();
+    return this._items.sort();
+  }
+
+  sortByTime(): TodoItem[] {
+    this._items.sort((a, b) => a.date.valueOf() - b.date.valueOf());
+    return this._items.sort((a, b) => a.date.valueOf() - b.date.valueOf());
   }
 }
 
-class TodoList2 extends TodoList {
+class ToDoListFilterable extends TodoList {
   constructor(name: string, items: TodoItem[]) {
     super(name, items);
   }
 
-  private findDescription(description: string): number {
+  findName(name: string): number {
+    return this._items.findIndex((item) => item.name === name);
+  }
+
+  findDescription(description: string): number {
     return this._items.findIndex((item) => item.description === description);
   }
 }
