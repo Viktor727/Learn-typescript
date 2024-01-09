@@ -36,38 +36,25 @@ interface ITodoItem{
   type: EType
 }
 
-// 1. Вам необхідно написати додаток Todo list✅. У списку нотаток повинні бути методи для додавання нового запису✅, 
-// видалення✅, редагування✅ та отримання повної інформації про нотатку за ідентифікатором✅, а так само отримання списку всіх нотаток✅. 
-// Крім цього, у користувача має бути можливість позначити нотатку, як виконану✅, і отримання інформації про те, 
-// скільки всього нотаток у списку✅ і скільки залишилося невиконаними✅. Нотатки не повинні бути порожніми.✅
 class TodoList {
-  private _name: string;
-  private _items: TodoItem[];
+  protected _name: string;
+  protected _items: TodoItem[];
 
   constructor(name: string, items: TodoItem[]) {
     this._name = name;
     this._items = items;
   }
 
-  private findIndexById(idToFind: number): number {
+  protected findIndexById(idToFind: number): number {
     return this._items.findIndex((item) => item.id === idToFind);
   }
 
-  private findName(name: string): number {
-    return this._items.findIndex((item) => item.name === name);
-  }
-
-  private findDescription(description: string): number {
-    return this._items.findIndex((item) => item.description === description);
-  }
-
   sort(type: ESort) {
-    if(ESort.Status){
+    if (ESort.Status) {
       this._items = this._items.sort();
       return this._items.sort();
-    } else if(ESort.Time){
+    } else if (ESort.Time) {
       this._items.sort((a, b) => a.date.valueOf() - b.date.valueOf());
-
     }
   }
 
@@ -146,6 +133,26 @@ class TodoList {
 
   get list(): TodoItem[] {
     return this._items;
+  }
+}
+
+class TodoList1 extends TodoList {
+  constructor(name: string, items: TodoItem[]) {
+    super(name, items);
+  }
+
+  private findName(name: string): number {
+    return this._items.findIndex((item) => item.name === name);
+  }
+}
+
+class TodoList2 extends TodoList {
+  constructor(name: string, items: TodoItem[]) {
+    super(name, items);
+  }
+
+  private findDescription(description: string): number {
+    return this._items.findIndex((item) => item.description === description);
   }
 }
 
